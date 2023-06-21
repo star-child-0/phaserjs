@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    gravity: number;
     velocityX: number;
     velocityY: number;
     grounded: boolean = false;
@@ -11,10 +12,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.body!.gravity.y = 500;
+        this.gravity = 150;
         this.velocityX = 200;
         this.velocityY = 300;
-        this.grounded = true;
+        this.grounded = false;
         this.cursors = this.scene.input.keyboard!.createCursorKeys();
 
         this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
@@ -29,7 +30,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             return;
         }
 
-        const {left, right, space} = this.cursors;
+        const { left, right, down, space } = this.cursors;
         
         if (left.isDown) {
             this.setVelocityX(-this.velocityX);
@@ -42,6 +43,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (space.isDown && this.grounded) {
             this.grounded = false;
             this.setVelocityY(-this.velocityY);
+        }
+
+        if (down.isDown && !this.grounded) {
+            this.setVelocityY(this.velocityY);
+        }     
+        
+        if (this.body.blocked.left == true || this.body.blocked.right){
+            this.setVelocityY(0);
+            this.grounded = true;
         }
 
         if (this.body.blocked.down == true){

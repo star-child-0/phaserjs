@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class Enemy extends Phaser.Physics.Arcade.Sprite {
+export default class Fruit extends Phaser.Physics.Arcade.Sprite {
     key: string;
 
     constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
