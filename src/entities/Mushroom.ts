@@ -25,5 +25,23 @@ export default class Mushroom extends Enemy {
     }
 
     createAnimations() {
+        this.scene.anims.create({
+            key: 'm-run',
+            frames: this.scene.anims.generateFrameNumbers('mushroom-run', {
+                start: 0,
+                end: 15,
+            }),
+            frameRate: 20,
+            repeat: -1,
+        });
+        this.scene.anims.create({
+            key: 'm-idle',
+            frames: this.scene.anims.generateFrameNumbers('mushroom-idle', {
+                start: 0,
+                end: 13,
+            }),
+            frameRate: 20,
+            repeat: -1,
+        });
     }
 }
